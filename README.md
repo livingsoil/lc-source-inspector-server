@@ -19,3 +19,18 @@ If the Selenium container is running, Selenium UI will be served from http://loc
 
 ## Build and run the Flask API to handle the POST from lc-source-inspector frontend
 
+```bash
+docker compose up -d
+```
+
+Check Flask API service
+```bash
+curl localhost:8000
+# Flask server running on port 8000
+```
+
+
+## Rebuild/run after code changes
+```bash
+docker-compose up --build -d
+```
