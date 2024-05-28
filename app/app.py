@@ -17,12 +17,19 @@ def find_apply_elements(driver):
     apply_elements = []
 
     # Wait for buttons and links to load
-    WebDriverWait(driver, 5, 0.2).until(
-        EC.presence_of_element_located((By.TAG_NAME, "button"))
-    )
-    WebDriverWait(driver, 5, 0.2).until(
-        EC.presence_of_element_located((By.TAG_NAME, "a"))
-    )
+    try:
+        WebDriverWait(driver, 5, 0.2).until(
+            EC.element_to_be_clickable((By.TAG_NAME, "button"))
+        )
+    except TimeoutException:
+        app.logger.info("No buttons found within the timeout period.")
+
+    try:
+        WebDriverWait(driver, 5, 0.2).until(
+            EC.element_to_be_clickable((By.TAG_NAME, "a"))
+        )
+    except TimeoutException:
+        app.logger.info("No links found within the timeout period.")
 
     buttons = driver.find_elements(By.TAG_NAME, 'button')
     links = driver.find_elements(By.TAG_NAME, 'a')
@@ -73,7 +80,7 @@ def scrape():
 
     driver.quit()
 
-    print(f"Found {len(apply_elements)} elements containing the word 'apply'")
+    app.logger.info(f"Found {len(apply_elements)} elements containing the word 'apply'")
 
     return {"message": "Scraping completed successfully"}, 200
 
