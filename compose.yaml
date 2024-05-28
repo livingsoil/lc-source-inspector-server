@@ -3,5 +3,11 @@ services:
     build:
      context: app
      target: builder
+    networks: 
+      - selnet
     ports: 
       - '8000:8000'
+
+networks:
+  selnet:
+    external: true
